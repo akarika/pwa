@@ -41,3 +41,12 @@ self.addEventListener('activate', evt =>{
     console.log('activate', evt);   
 })
 ```
+Le SW peut mettre en cache les pages que vous visitez
+L'interface CacheStorage de l'API ServiceWorker représente le stockage pour les objets Cache. Elle fournit un répertoire général de tous les caches auquel un ServiceWorker peut accéder, et maintient une correspondance entre les chaînes de noms et ces objets Cache.
+https://developer.mozilla.org/fr/docs/Web/API/CacheStorage
+```
+if(window.caches){ // verifie que l API existe
+    //ouvre un cache si lexiste , sinon le crée
+    caches.open('veille-techno-1.0');
+}
+```

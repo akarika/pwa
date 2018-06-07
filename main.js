@@ -34,3 +34,12 @@ if ('serviceWorker' in navigator) {
     .then(res => console.log('ServiceWorker registration successful with scope: ', res))
     .catch(err=> console.error(err))
 }  */
+
+if(window.caches){
+    //ouvre un cache si lexiste pas le cré
+    caches.open('veille-techno-1.0');
+    caches.open('other-caches');
+    caches.keys()
+    .then(console.log);
+//["veille-techno-1.0", "other-caches"]
+}

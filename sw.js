@@ -16,3 +16,4 @@ self.addEventListener('fetch', evt => {
     console.log('fetch', evt.request.url);
 })
 
+
