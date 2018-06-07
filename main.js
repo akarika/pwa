@@ -35,11 +35,22 @@ if ('serviceWorker' in navigator) {
     .catch(err=> console.error(err))
 }  */
 
-if(window.caches){
-    //ouvre un cache si lexiste pas le cré
+/* if(window.caches){
+    ouvre un cache si lexiste pas le cré
     caches.open('veille-techno-1.0');
     caches.open('other-caches');
     caches.keys()
     .then(console.log);
-//["veille-techno-1.0", "other-caches"]
+["veille-techno-1.0", "other-caches"]
+} */
+
+if(window.caches){
+    caches.open('veille-techno-1.0')
+    .then(cache => {
+        cache.addAll([
+            'index.html',
+            'main.js',
+            'vendors/bootstrap4.min.css'
+        ])
+    })
 }
