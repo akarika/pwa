@@ -44,7 +44,7 @@ if ('serviceWorker' in navigator) {
 ["veille-techno-1.0", "other-caches"]
 } */
 
-if(window.caches){
+/* if(window.caches){
     caches.open('veille-techno-1.0')
     .then(cache => {
         cache.addAll([
@@ -53,4 +53,4 @@ if(window.caches){
             'vendors/bootstrap4.min.css'
         ])
     })
-}
+} */
