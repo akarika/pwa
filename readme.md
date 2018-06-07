@@ -13,7 +13,8 @@ En synthèse, un service worker est finalement un simple fichier JavaScript qui 
 ### Cyle de vie service Worker
 ![alt text](https://developers.google.com/web/fundamentals/primers/service-workers/images/sw-lifecycle.png "LService Worker")
 
-Installation 
+#### Installation 
+dans app.js
 ```
 if ('serviceWorker' in navigator) {
     // Register a service worker hosted at the root of the
@@ -27,3 +28,16 @@ if ('serviceWorker' in navigator) {
     console.log('Service workers are not supported.');
 }
   ```
+  dans sw.js
+  ```
+  self.addEventListener('install', evt =>{
+    console.log('install', evt);   
+})
+```
+  #### Activation
+  sw.js
+  ```
+self.addEventListener('activate', evt =>{
+    console.log('activate', evt);   
+})
+```
