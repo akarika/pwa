@@ -7,9 +7,9 @@ function loadTechnologies() {
             response.json()
                 .then(technos => {
                     const allTechnos = technos.map(t => `<div><b>${t.name}</b> ${t.description}  <a href="${t.url}">site de ${t.name}</a> </div>`)
-                            .join('');
-            
-                    technosDiv.innerHTML = allTechnos; 
+                        .join('');
+
+                    technosDiv.innerHTML = allTechnos;
                 });
         })
         .catch(console.error);
@@ -17,11 +17,20 @@ function loadTechnologies() {
 
 loadTechnologies();
 
-/* if('serviceworker' in navigator){
 
-} */
-
-if(navigator.serviceWorker){
-    navigator.serviceWorker.register('sw.js')
-    .catch(err=> console.error(err))
+if ('serviceWorker' in navigator) {
+    // Register a service worker hosted at the root of the
+    // site using the default scope.
+    navigator.serviceWorker.register('/sw.js').then(function (registration) {
+        console.log('Service worker registration succeeded:', registration);
+    }).catch(function (error) {
+        console.log('Service worker registration failed:', error);
+    });
+} else {
+    console.log('Service workers are not supported.');
 }
+/*  if(navigator.serviceWorker){
+    navigator.serviceWorker.register('sw.js')
+    .then(res => console.log('ServiceWorker registration successful with scope: ', res))
+    .catch(err=> console.error(err))
+}  */

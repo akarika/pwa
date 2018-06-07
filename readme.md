@@ -9,3 +9,21 @@ En synthèse, un service worker est finalement un simple fichier JavaScript qui 
 * Possibilité de mettre en cache une page
 * Ecoute des push request (Push serveur)
 * Mode offline
+
+### Cyle de vie service Worker
+![alt text](https://developers.google.com/web/fundamentals/primers/service-workers/images/sw-lifecycle.png "LService Worker")
+
+Installation 
+```
+if ('serviceWorker' in navigator) {
+    // Register a service worker hosted at the root of the
+    // site using the default scope.
+    navigator.serviceWorker.register('/sw.js').then(function (registration) {
+        console.log('Service worker registration succeeded:', registration);
+    }).catch(function (error) {
+        console.log('Service worker registration failed:', error);
+    });
+} else {
+    console.log('Service workers are not supported.');
+}
+  ```
