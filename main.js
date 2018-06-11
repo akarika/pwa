@@ -29,6 +29,7 @@ if ('serviceWorker' in navigator) {
 } else {
     console.log('Service workers are not supported.');
 }
+//persistant notification 
 // if window.Notification and if window.Notification is not disabled
 if(window.Notification && window.Notification !==  'undefined'){
     const options = {
@@ -37,12 +38,13 @@ if(window.Notification && window.Notification !==  'undefined'){
     }
     Notification.requestPermission(perm =>{
         if(perm === 'granted'){
-           new Notification('Hello !!PwA', options)
+         //  new Notification('Hello !!PwA', options)
         }else{
             console.log('non autorisé');
         }
     }).then(res=>console.log(res))//granted
 }
+
 
 /*  if(navigator.serviceWorker){
     navigator.serviceWorker.register('sw.js')

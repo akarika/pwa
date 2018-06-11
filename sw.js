@@ -28,12 +28,12 @@ self.addEventListener('install', evt => {
 });
 self.addEventListener('activate', evt => {
     console.log('activate', evt);
-//anonymous asyn function , promise all for each key in caches.key
-    evt.waitUntil(async function (){
+    //anonymous asyn function , promise all for each key in caches.key
+    evt.waitUntil(async function () {
         await caches.keys().then(keys => {
             return Promise.all([keys.forEach(key => {
                 if (key !== cacheName) {
-                   return caches.delete(key);
+                    return caches.delete(key);
                 }
             })]);
         })
@@ -97,5 +97,14 @@ self.addEventListener('fetch', evt => {
             return caches.match(evt.request);
         }
     }());
-});
 
+});
+// le SW peut écouter alors que l 'app est fermé 
+// écouter un serveur de push notification
+//envoyer une notifiaction alors qu el app est fermé
+self.registration.showNotification('Notif depuis le sw', {
+    body: "body !!! sw"
+});
+self.addEventListener('notificationclose', evt => {
+    console.log('notification fermé', evt);
+});

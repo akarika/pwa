@@ -149,3 +149,15 @@ https://developer.mozilla.org/en-US/docs/Web/API/notification/Notification
         icon: 'images/icons/icon-72x72.png'
     }
 ```
+
+* le SW peut écouter alors que l 'app est fermé 
+* écouter un serveur de push notification
+* envoyer une notifiaction alors qu el app est fermé
+self.registration.showNotification('Notif depuis le sw', {
+    body: "body !!! sw"
+});
+// réagit a la fermeture de la notification
+self.addEventListener('notificationclose', evt => {
+    console.log('notification fermé', evt);
+});
+```
