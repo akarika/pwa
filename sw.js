@@ -1,5 +1,5 @@
 console.log('hey SW');
-const cacheName = 'veille-techno-1.0';
+const cacheName = 'veille-techno-1.3';
 self.addEventListener('install', evt => {
     console.log('install', evt);
     //self.skipWaiting();
@@ -17,10 +17,10 @@ self.addEventListener('install', evt => {
         try {
             const cachePromise = await caches.open(cacheName);
             await cachePromise.addAll(files)
-            console.log('cache initialisé');           
+            console.log('cache initialisé');
         } catch (error) {
             console.error(error)
-        }  
+        }
     };
     startSw();
     //permet de dire au navigateur qu il y aun travial en cours , et qu il ne doit pas quitter tant que le SW n'a pas finit son travail 
@@ -28,6 +28,16 @@ self.addEventListener('install', evt => {
 });
 self.addEventListener('activate', evt => {
     console.log('activate', evt);
+//anonymous asyn function , promise all for each key in caches.key
+    evt.waitUntil(async function (){
+        await caches.keys().then(keys => {
+            return Promise.all([keys.forEach(key => {
+                if (key !== cacheName) {
+                   return caches.delete(key);
+                }
+            })]);
+        })
+    }());
 });
 self.addEventListener('fetch', evt => {
     console.log('evt', evt);
@@ -70,7 +80,7 @@ self.addEventListener('fetch', evt => {
                 })
                 .catch(err => caches.match(evt.request))
             ); */
-            
+
     // strategy network first with fallback        ES7
     evt.respondWith(async function () {
         console.log('ici');
