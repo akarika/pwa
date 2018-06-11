@@ -29,12 +29,26 @@ if ('serviceWorker' in navigator) {
 } else {
     console.log('Service workers are not supported.');
 }
+// if window.Notification and if window.Notification is not disabled
+if(window.Notification && window.Notification !==  'undefined'){
+    const options = {
+        body:'Je suis le body de la notification',
+        icon: 'images/icons/icon-72x72.png'
+    }
+    Notification.requestPermission(perm =>{
+        if(perm === 'granted'){
+           new Notification('Hello !!PwA', options)
+        }else{
+            console.log('non autorisé');
+        }
+    }).then(res=>console.log(res))//granted
+}
+
 /*  if(navigator.serviceWorker){
     navigator.serviceWorker.register('sw.js')
     .then(res => console.log('ServiceWorker registration successful with scope: ', res))
     .catch(err=> console.error(err))
 }  */
-
 /* if(window.caches){
     ouvre un cache si lexiste pas le cré
     caches.open('veille-techno-1.0');

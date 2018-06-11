@@ -115,3 +115,37 @@ self.addEventListener('fetch', evt => {
             })  
         );
 ```
+
+### Manifeste 
+
+Le manifeste d'une application web fournit des informations concernant celle-ci (comme son nom, son auteur, une icône et une description) dans un document texte JSON. Le but du manifeste est d'installer des applications sur l'écran d'accueil d'un appareil, offrant aux utilisateurs un accès plus rapide et une expérience plus riche.
+
+https://developer.mozilla.org/fr/docs/Web/Manifest
+
+
+
+## Notification push persistante
+
+```
+window.Notification // vérifie si le navigateur L'api
+window.Notification !==  'undefined' // vérifie que le notifications ne sont désactivé
+if(window.Notification && window.Notification !==  'undefined'){
+    Notification.requestPermission(perm =>{
+        if(perm === 'granted'){
+            const notif = new Notification('Hello notification')
+        }else{
+            console.log('non autorisé');
+        }
+    }).then(res=>console.log(res))//granted
+}
+```
+
+Le constructeur Notification() posséde aussi la possibilité de mettre des options
+https://developer.mozilla.org/en-US/docs/Web/API/notification/Notification
+
+```
+   const options = {
+        body:'Je suis le body de la notification',
+        icon: 'images/icons/icon-72x72.png'
+    }
+```
