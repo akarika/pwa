@@ -51,10 +51,14 @@ if(window.caches){ // verifie que l API existe
 }
 ```
 https://www.julienpradet.fr/fiches-techniques/pwa-intercepter-les-requetes-http-et-les-mettre-en-cache/
-#### Il existe différente stratégie de de ceches 
+#### Il existe différente stratégie de mise en caches 
+
 **Network Only** : on ne veut pas de cache car l'opération est critique/ne peut pas fonctionner hors ligne. Si ce n'est qu'une partie de l'application, il est important d'expliquer clairement au niveau de l'interface pourquoi la fonctionnalité n'est pas disponible.
+
 **Cache First** : on récupère en priorité depuis le cache. S'il n'y a pas encore de cache, on va chercher sur le réseau et on stocke la réponse dans le cache. L'intérêt est qu'une fois qu'on a mis quelque chose en cache, on est capable de le servir très rapidement à l'utilisateur. La performance ressentie s'en retrouve grandement améliorée.
+
 **Network First** : on récupère en priorité depuis le réseau. Si le réseau ne répond pas, on sert le cache afin d'afficher du contenu. Cela permet d'afficher du contenu qui n'est peut-être plus à jour, mais qui a le mérite d'être là.
+
 **Stale While Revalidate** : on récupère le cache et on l'envoie. Le contenu est ainsi directement disponible. Ensuite, on va chercher la requête sur le réseau pour que ce soit à jour la prochaine fois qu'on fait la requête.
 
 * Network Only
@@ -70,10 +74,28 @@ self.addEventListener('fetch', evt => {
         })
         .catch(err => caches.match(evt.request))
     );
+
+    //ES7 version
+    evt.respondWith(async function () {
+        console.log('ici');
+        try {
+            const response = await (fetch(evt.request));
+            const clone = response.clone();
+            const oCaches = await (caches.open(cacheName));
+            const putCaches = await (oCaches.put(evt.resquest, response));
+            console.log(`depuis le réseaux ${evt.request.url}`);
+            return clone;
+        } catch (e) {
+            console.error('error strategy network first with fallback', e)
+            console.log(`depuis le cache ${evt.request.url}`);
+            return caches.match(evt.request);
+        }
+    }());
+
 ```
 * Cache First
 ```
-// caches stategy
+// caches stategy with network fallback
      console.log(`fetch sur url ${evt.request.url}`);
          evt.respondWith(
              // if evt.request is in caches 
