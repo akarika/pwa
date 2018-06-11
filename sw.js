@@ -102,9 +102,36 @@ self.addEventListener('fetch', evt => {
 // le SW peut écouter alors que l 'app est fermé 
 // écouter un serveur de push notification
 //envoyer une notifiaction alors qu el app est fermé
+
+// property : action
+/* Un tableau de NotificationActions représentant les actions disponibles pour l'utilisateur lorsque la notification est présentée.
+ Ce sont des options que l'utilisateur peut choisir pour agir sur l'action dans le contexte de la notification elle-même. 
+ Le nom de l'action est envoyé au gestionnaire de notification du service worker pour lui faire savoir que l'action a été sélectionnée 
+ par l'utilisateur.
+ */
+//https://developer.mozilla.org/en-US/docs/Web/API/notification/Notification
+
 self.registration.showNotification('Notif depuis le sw', {
-    body: "body !!! sw"
+    body: "body !!! sw",
+    actions: [ //permet un choix d action
+        { action: 'accept', title: 'accepter' },
+        { action: 'refuser', title: 'refuser' }
+    ]
 });
+
+//evt notificationclose
 self.addEventListener('notificationclose', evt => {
     console.log('notification fermé', evt);
+});
+//evt notificationclick
+self.addEventListener('notificationclick', evt=>{
+    console.log(`evt click `, evt);
+    if(evt.action=== 'accept'){
+        //utisateur a clické sur le btn accepté défini plus haut { action: 'accept'
+        console.log('vous avez accepté'); 
+    }else if(evt.action === 'refuse'){
+        console.log('vous avez refusé');
+    }else{
+        console.log('vous avez cliqué sur la notification (pas sur les btn)');
+    }
 });
