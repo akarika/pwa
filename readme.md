@@ -161,3 +161,19 @@ self.addEventListener('notificationclose', evt => {
     console.log('notification fermé', evt);
 });
 ```
+
+Etape 0
+
+génération d un couple clé publique /clé privée
+clé publique du brow²er a firebase pur une demande de souscription pôur générer une vapid key
+récupération d une fonction capable de convertir une string (qui est en base64) en array buffer(Uint8Array)
+
+Etape1 
+
+client (chrome) joint une clé publique pour effectuer une demande de souscription
+auprés de ------------> Firebase cloud messaging
+        <----------- FCM envoie une souscription
+
+Etape 2 
+
+configurer un push server Node afin qu'il puisse envoyer une push notification à un utilisateur possédanbt une soucirption crée durant la étape 1

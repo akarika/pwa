@@ -1,6 +1,6 @@
 console.log('hey SW');
 const cacheName = 'veille-techno-1.3';
-self.addEventListener('push', function (event) {
+/* self.addEventListener('push', function (event) {
     if (!(self.Notification && self.notification.permission === 'granted')) {
         return;
     }
@@ -24,7 +24,7 @@ self.addEventListener('push', function (event) {
             clients.openWindow('https://example.blog.com/2015/03/04/something-new.html');
         }
     });
-});
+}); */
 self.addEventListener('install', evt => {
     console.log('install', evt);
     //self.skipWaiting();
