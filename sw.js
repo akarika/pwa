@@ -1,5 +1,30 @@
 console.log('hey SW');
 const cacheName = 'veille-techno-1.3';
+self.addEventListener('push', function (event) {
+    if (!(self.Notification && self.notification.permission === 'granted')) {
+        return;
+    }
+
+    var data = {};
+    if (event.data) {
+        data = event.data.json();
+    }
+    var title = data.title || "Something Has Happened";
+    var message = data.message || "Here's something you might want to check out.";
+    var icon = "images/new-notification.png";
+
+    var notification = new Notification(title, {
+        body: message,
+        tag: 'simple-push-demo-notification',
+        icon: icon
+    });
+
+    notification.addEventListener('click', function () {
+        if (clients.openWindow) {
+            clients.openWindow('https://example.blog.com/2015/03/04/something-new.html');
+        }
+    });
+});
 self.addEventListener('install', evt => {
     console.log('install', evt);
     //self.skipWaiting();
@@ -16,7 +41,7 @@ self.addEventListener('install', evt => {
     const startSw = async () => {
         try {
             const cachePromise = await caches.open(cacheName);
-            await cachePromise.addAll(files)
+            return await cachePromise.addAll(files)
             console.log('cache initialisé');
         } catch (error) {
             console.error(error)
@@ -85,7 +110,7 @@ self.addEventListener('fetch', evt => {
     evt.respondWith(async function () {
         console.log('ici');
         try {
-            const response = await (fetch(evt.request));
+            const response = await fetch(evt.request);
             const clone = response.clone();
             const oCaches = await (caches.open(cacheName));
             const putCaches = await (oCaches.put(evt.resquest, response));
@@ -111,7 +136,7 @@ self.addEventListener('fetch', evt => {
  */
 //https://developer.mozilla.org/en-US/docs/Web/API/notification/Notification
 
-self.registration.showNotification('Notif depuis le sw', {
+/* self.registration.showNotification('Notif depuis le sw', {
     body: "body !!! sw",
     actions: [ //permet un choix d action
         { action: 'accept', title: 'accepter' },
@@ -134,4 +159,18 @@ self.addEventListener('notificationclick', evt=>{
     }else{
         console.log('vous avez cliqué sur la notification (pas sur les btn)');
     }
+    //close notification
+    evt.notification.close();
+}); */
+console.log('hello');
+//on écoute la push notification
+self.addEventListener('push', evt => {
+    console.log('push event', evt);
+    console.log('data text push', evt.data.text());
+    const title = evt.data.text();
+//et on affiche la notification persistante
+    evt.waitUntil(self.registration.showNotification(
+        title, 
+        { body: 'ça marche', image: 'images/icons/icon-152x152.png' }
+    ));
 });
