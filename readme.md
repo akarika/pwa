@@ -15,7 +15,7 @@ En synthèse, un service worker est finalement un simple fichier JavaScript qui 
 
 #### Installation 
 dans app.js
-```
+```javascript
 if ('serviceWorker' in navigator) {
     // Register a service worker hosted at the root of the
     // site using the default scope.
@@ -29,14 +29,14 @@ if ('serviceWorker' in navigator) {
 }
   ```
   dans sw.js
-  ```
+  ```javascript
   self.addEventListener('install', evt =>{
     console.log('install', evt);   
 })
 ```
   #### Activation
   sw.js
-  ```
+  ```javascript
 self.addEventListener('activate', evt =>{
     console.log('activate', evt);   
 })
@@ -44,7 +44,7 @@ self.addEventListener('activate', evt =>{
 Le SW peut mettre en cache les pages que vous visitez
 L'interface CacheStorage de l'API ServiceWorker représente le stockage pour les objets Cache. Elle fournit un répertoire général de tous les caches auquel un ServiceWorker peut accéder, et maintient une correspondance entre les chaînes de noms et ces objets Cache.
 https://developer.mozilla.org/fr/docs/Web/API/CacheStorage
-```
+```javascript
 if(window.caches){ // verifie que l API existe
     //ouvre un cache si lexiste , sinon le crée
     caches.open('veille-techno-1.0');
@@ -62,7 +62,7 @@ https://www.julienpradet.fr/fiches-techniques/pwa-intercepter-les-requetes-http-
 **Stale While Revalidate** : on récupère le cache et on l'envoie. Le contenu est ainsi directement disponible. Ensuite, on va chercher la requête sur le réseau pour que ce soit à jour la prochaine fois qu'on fait la requête.
 
 * Network Only
-```
+```javascript
 // Network Only
 self.addEventListener('fetch', evt => {
     evt.respondWith(
@@ -94,7 +94,7 @@ self.addEventListener('fetch', evt => {
 
 ```
 * Cache First
-```
+```javascript
 // caches stategy with network fallback
      console.log(`fetch sur url ${evt.request.url}`);
          evt.respondWith(
@@ -126,7 +126,7 @@ https://developer.mozilla.org/fr/docs/Web/Manifest
 
 ## Notification push persistante
 
-```
+```javascript
 window.Notification // vérifie si le navigateur L'api
 window.Notification !==  'undefined' // vérifie que le notifications ne sont désactivé
 if(window.Notification && window.Notification !==  'undefined'){
@@ -143,7 +143,7 @@ if(window.Notification && window.Notification !==  'undefined'){
 Le constructeur Notification() posséde aussi la possibilité de mettre des options
 https://developer.mozilla.org/en-US/docs/Web/API/notification/Notification
 
-```
+```javascript
    const options = {
         body:'Je suis le body de la notification',
         icon: 'images/icons/icon-72x72.png'
@@ -153,6 +153,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/notification/Notification
 * le SW peut écouter alors que l 'app est fermé 
 * écouter un serveur de push notification
 * envoyer une notifiaction alors qu el app est fermé
+```javascript
 self.registration.showNotification('Notif depuis le sw', {
     body: "body !!! sw"
 });

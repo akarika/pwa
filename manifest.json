@@ -2,8 +2,10 @@
     "theme_color": "#d3c7dc",
     "background_color": "#d3c7dc",
     "display": "standalone",
-    "Scope": "/",
+    "scope": "/",
     "start_url": "/",
+    "name":"PWA app",
+    "short_name": "PWA",
     "icons": [
         {
             "src": "images/icons/icon-72x72.png",
